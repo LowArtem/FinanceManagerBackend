@@ -5,9 +5,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["FinanceManagerBackend.Api/FinanceManagerBackend.Api.csproj", "FinanceManagerBackend.Api/"]
-COPY ["FinanceManagerBackend.Data/FinanceManagerBackend.Data.csproj", "FinanceManagerBackend.Data/"]
-COPY ["FinanceManagerBackend.Core/FinanceManagerBackend.Core.csproj", "FinanceManagerBackend.Core/"]
+COPY . .
 RUN dotnet restore "FinanceManagerBackend.Api/FinanceManagerBackend.Api.csproj"
 COPY . .
 WORKDIR "/src/FinanceManagerBackend.Api"

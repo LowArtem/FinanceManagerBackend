@@ -18,16 +18,16 @@ services:
     labels:
       org.label-schema.group: 'application'
 
-#  seq_logger:
-#    container_name: seq_logger
-#    image: lowartem/seq
-#    #    ports:
-#    #      - '5341:80'
-#    restart: unless-stopped
-#    networks:
-#      - app
-#    labels:
-#      org.label-schema.group: 'application'
+  seq_logger:
+    container_name: seq_logger
+    image: lowartem/seq
+    #    ports:
+    #      - '5341:80'
+    restart: unless-stopped
+    networks:
+      - app
+    labels:
+      org.label-schema.group: 'application'
 
 networks:
   app:

@@ -65,20 +65,21 @@
       
       rescue:
         - name: Логирование ошибки
-          debug:
-            msg: "Ошибка на этапе развертывания. Результаты: \
-                    Сервисы - {{ result_services }}, \
-                    Основное приложение - {{ result_main }}, \
-                    Портейнер - {{ result_portainer }}, \
-                    Мониторинг - {{ result_monitoring }}"
+          fail:
+            msg: >-
+              Ошибка на этапе развертывания. Результаты:
+              Сервисы - {{ result_services | default('Не выполнено') }},
+              Основное приложение - {{ result_main | default('Не выполнено') }},
+              Портейнер - {{ result_portainer | default('Не выполнено') }},
+              Мониторинг - {{ result_monitoring | default('Не выполнено') }}
 
     - name: Удаление временной директории
       file:
         path: '{{ directory }}'
         state: absent
-      when: result_services.changed or result_main.changed or result_portainer.changed or result_monitoring.changed
+      when: result_services.changed and result_main.changed and result_portainer.changed and result_monitoring.changed
 
     - name: Проверка на успешность развертывания
       debug:
         msg: 'Проект успешно развернут'
-      failed_when: not result_services.changed and not result_main.changed and not result_portainer.changed and not result_monitoring.changed 
+      failed_when: not result_services.changed or not result_main.changed or not result_portainer.changed or not result_monitoring.changed 
