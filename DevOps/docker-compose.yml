@@ -15,9 +15,6 @@ services:
     restart: unless-stopped
     networks:
       - app
-    depends_on:
-      - postgres
-      - redis
     labels:
       org.label-schema.group: 'application'
 
