@@ -1,0 +1,37 @@
+version: '3.9'
+services:
+  application_backend:
+    container_name: application_backend
+    image: application_backend
+    build:
+      dockerfile: ../FinanceManagerBackend.Api/Dockerfile
+    command: dotnet FinanceManagerBackend.Api.dll
+    environment:
+      ASPNETCORE_ENVIRONMENT: 'Development'
+      ASPNETCORE_URLS: 'http://*:5000;'
+    #    ports:
+    #      - '5000:5000'
+    working_dir: /app
+    restart: unless-stopped
+    networks:
+      - app
+    depends_on:
+      - postgres
+      - redis
+    labels:
+      org.label-schema.group: 'application'
+
+  seq_logger:
+    container_name: seq_logger
+    image: lowartem/seq
+    #    ports:
+    #      - '5341:80'
+    restart: unless-stopped
+    networks:
+      - app
+    labels:
+      org.label-schema.group: 'application'
+
+networks:
+  app:
+    external: true
