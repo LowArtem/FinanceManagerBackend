@@ -5,7 +5,7 @@ services:
     hostname: application_backend
     image: application_backend
     build:
-      context: ./../
+      context: ../
       dockerfile: ../FinanceManagerBackend.Api/Dockerfile
     command: dotnet FinanceManagerBackend.Api.dll
     environment:
