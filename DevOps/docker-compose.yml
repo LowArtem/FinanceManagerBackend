@@ -2,8 +2,10 @@ version: '3.9'
 services:
   application_backend:
     container_name: application_backend
+    hostname: application_backend
     image: application_backend
     build:
+      context: ./
       dockerfile: ../FinanceManagerBackend.Api/Dockerfile
     command: dotnet FinanceManagerBackend.Api.dll
     environment:
