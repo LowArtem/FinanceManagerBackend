@@ -47,7 +47,7 @@ public class Startup
         services.AddTransient(typeof(UserService), typeof(UserService));
         
         // Logger
-        services.AddSerilog();
+        services.AddSerilog(configuration => configuration.ReadFrom.Configuration(Configuration));
 
         // Auto Mapper Configurations
         var mapperConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
