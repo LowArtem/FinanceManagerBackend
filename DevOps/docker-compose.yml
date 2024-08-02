@@ -30,6 +30,17 @@ services:
       - app
     labels:
       org.label-schema.group: 'application'
+      
+  application_nginx:
+    container_name: application_nginx
+    restart: always
+    ports:
+      - '3002:80'
+    build:
+      context: .
+      dockerfile: Nginx.Dockerfile
+    networks:
+      - app
 
 networks:
   app:
