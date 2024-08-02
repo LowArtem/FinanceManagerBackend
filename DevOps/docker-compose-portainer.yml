@@ -11,7 +11,14 @@ services:
     restart: unless-stopped
     labels:
       org.label-schema.group: 'portainer'
+    networks:
+      - app
 
 volumes:
   portainer-data:
     driver: local
+    
+networks:
+  app:
+    name: app
+    external: true
