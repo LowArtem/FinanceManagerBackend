@@ -4,17 +4,10 @@
   become: yes
 
   vars:
-    GITUSER: # - Username для клонирования приватного репозитория
-    GITPASS: # - Пароль для клонирования приватного репозитория
     REPO: # - Ссылка на репозиторий
     BRANCH: master # - Ветка для клонирования
     DEV_OPS_DIR: '/DevOps' # - Путь до папки с DevOps
-
-  pre_tasks:
-    - name: Проверка обязательных переменных
-      fail:
-        msg: "Переменные GITUSER, GITPASS и REPO должны быть заданы"
-      when: GITUSER is not defined or GITPASS is not defined or REPO is not defined
+    MONITORING_DIR: '/Monitoring' # - Путь до папки с мониторингом
 
   tasks:
     - name: 'Создание временной папки'
@@ -30,7 +23,7 @@
 
     - name: 'Клонирование репозитория'
       git:
-        repo: "https://{{ GITUSER | urlencode }}:{{ GITPASS | urlencode }}@{{ REPO }}"
+        repo: "{{ REPO }}"
         dest: '{{ directory }}/'
         version: '{{ BRANCH }}'
 
@@ -58,7 +51,7 @@
 
         - name: Сборка и запуск мониторинга приложения
           community.docker.docker_compose_v2:
-            project_src: '{{ directory }}/Monitoring'
+            project_src: "{{ directory }}{{ MONITORING_DIR | default('', true) }}"
             files: [ docker-compose.yml ]
             state: present
           register: result_monitoring
